@@ -1,6 +1,6 @@
 <div class="animated fadeIn">
   <div class="row">
-    <div class="col-lg-12">
+    <div  [ngClass]="selected_store == null ? 'col-lg-12':'col-lg-9'" >
         <div class="card">
           <div class="card-header">
             <i class="fa fa-align-justify"></i> Store List
@@ -10,12 +10,17 @@
                   <mat-form-field class="search-form-field" floatLabel="never">
                     <input matInput [(ngModel)]='searchKey' autocomplete="off" placeholder="Search" (keyup)="applyFilter()"  />
                   </mat-form-field>
+                &nbsp; &nbsp;
                   <button mat-button matSuffix  aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()" >
                     <i class="fa fa-times-circle"></i>
                   </button>
+                &nbsp; &nbsp;
                   <button mat-raised-button (click)="onCreate()">
                     <i class="fa fa-plus-circle"></i> Create
-                  </button>
+                  </button> &nbsp; &nbsp;
+                <button mat-raised-button (click)="onBulkDelete()" [disabled]="stores_to_delete.length == 0" >
+                  <i class="fa fa-trash"></i> Bulk delete
+                </button>
               </div>
 
             </div>
@@ -36,7 +41,7 @@
 
                 <ng-container matColumnDef="name">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
-                  <mat-cell *matCellDef="let item">{{item.name}}</mat-cell>
+                  <mat-cell *matCellDef="let item"><a href="#" (click)="showAdditionalInfos($event, item)" >{{item.name}}</a></mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="shopping_center">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Shopping center</mat-header-cell>
@@ -60,9 +65,17 @@
                   <mat-header-cell *matHeaderCellDef></mat-header-cell>
                   <mat-cell *matCellDef="let item">
                     <button mat-icon-button color="primary" (click)="onEdit(item)"><i class="fa fa-edit  text-primary"></i></button> &nbsp; &nbsp;
-                    <button mat-icon-button color="warn"><i class="fa fa-trash  text-danger"></i></button>
+                    <button mat-icon-button color="warn" (click)="onDelete(item)"><i class="fa fa-trash  text-danger"></i></button>
                   </mat-cell>
                 </ng-container>
+                <ng-container matColumnDef="delete_actions">
+                  <mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox (change)="checkAll($event.checked)"></mat-checkbox></mat-header-cell>
+                  <mat-cell *matCellDef="let item">
+                    <mat-checkbox [checked]="c_all" (change)="push($event.checked, item)"></mat-checkbox>
+                  </mat-cell>
+                </ng-container>
+
 
                 <ng-container matColumnDef="loading">
                   <mat-footer-cell *matFooterCellDef colspan="8">
@@ -90,5 +103,73 @@
           </div>
         </div>
     </div>
+
+      <div class="col-lg-3" *ngIf="selected_store">
+        <div class="card">
+          <div class="card-header">
+
+            <div class="card-header-actions">
+              <!--<button type="button" class="card-header-action btn btn-link btn-setting"><i class="icon-settings"></i></button>-->
+
+              <button type="button" class="card-header-action btn btn-link btn-close" (click)="closeAdditionalInfosWindow()"><i class="icon-close"></i></button>
+            </div>
+            <br class="clear"/>
+            <i class="fa fa-align-justify"></i>  {{selected_store.parent_id}} {{selected_store.name}} - {{selected_store.shopping_center}}
+
+          </div>
+          <div class="card-body">
+            <h6> Store Representatives</h6>
+            <hr/>
+            <table class="table table-striped">
+              <thead>
+              <tbody>
+              <tr>
+                <th>Name</th>
+                <td>{{selected_store.store_representatives_name}}</td>
+              </tr>
+              <tr>
+                <th>Surname</th>
+                <td>{{selected_store.store_representatives_surname}}</td>
+              </tr>
+              <tr>
+                <th>Email</th>
+                <td>{{selected_store.store_representatives_email}}</td>
+              </tr>
+              <tr>
+                <th>Mobile</th>
+                <td>{{selected_store.store_representatives_cell_no}}</td>
+              </tr>
+
+              </tbody>
+            </table>
+            <h6> Operating Times</h6>
+            <hr/>
+            <table class="table table-striped">
+              <thead>
+              <tbody>
+              <tr>
+                <th>Weekdays</th>
+                <td>{{selected_store.operating_times_weekday_from}} - {{selected_store.operating_times_weekday_to}} </td>
+              </tr>
+              <tr>
+                <th>Saturdays</th>
+                <td>{{selected_store.operating_times_saturday_from}} - {{selected_store.operating_times_saturday_to}} </td>
+              </tr>
+              <tr>
+                <th>Sundays</th>
+                <td>{{selected_store.operating_times_sunday_from}} - {{selected_store.operating_times_sunday_to}} </td>
+              </tr>
+              <tr>
+                <th>Public Holiday</th>
+                <td>{{selected_store.operating_times_ph_from}}  - {{selected_store.operating_times_ph_to}} </td>
+              </tr>
+
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+      </div>
   </div>
+
 </div>

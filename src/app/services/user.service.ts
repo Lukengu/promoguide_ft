@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {api_path} from '../global';
+
 import {UserModel} from '../models/user.model';
+import {api_path} from '../../environments/global';
 
 @Injectable({
   providedIn: 'root'

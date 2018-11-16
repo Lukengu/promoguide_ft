@@ -10,6 +10,7 @@ import {
   MatProgressSpinnerModule,
   MatSortModule,
   MatTableModule,
+  MatCheckboxModule
 } from '@angular/material';
 // Collapse Component
 import { CollapseModule } from 'ngx-bootstrap/collapse';
@@ -46,7 +47,8 @@ import {SharedModule} from '../../shared/shared.module';
     MatDialogModule,
     CollapseModule.forRoot(),
     NgSelectModule,
-    SharedModule
+    SharedModule,
+    MatCheckboxModule
   ],
   declarations: [
     StoresComponent,

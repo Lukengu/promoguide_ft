@@ -1,8 +1,9 @@
 import {Inject, Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {UserModel} from '../models/user.model';
-import {api_path} from '../global';
 import 'rxjs-compat/add/operator/map';
+import {api_path} from '../../environments/global';
+
 
 
 

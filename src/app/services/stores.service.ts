@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {api_path} from '../global';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+
 import {AuthService} from './auth.service';
 import {Store} from '../models/store.model';
 import {Observable} from 'rxjs';
 import 'rxjs-compat/add/operator/map';
+import {api_path} from '../../environments/global';
 
 
 
@@ -16,13 +17,17 @@ export class StoresService {
   private store: Store = null;
   private store_url: string = api_path + 'user/stores/';
   private parent_store: string = api_path + 'user/stores/parent/';
+  private headers: HttpHeaders;
 
-  constructor(private http: HttpClient, authservice: AuthService) {
+  constructor(private http: HttpClient, authservice: AuthService,   ) {
     const permissions: string[] = authservice.getCurrentUser().permissions;
     if (permissions.indexOf('admin') === -1 ) {
       this.store_url = this.store_url + authservice.getCurrentUser().id;
       this.parent_store = this.parent_store + authservice.getCurrentUser().id;
     }
+    this.headers = new HttpHeaders();
+    this.headers.append('Content-type', 'application/json')
+      .append('Accept', 'application/json');
   }
 
   public getStores(): Observable<Store[]> {
@@ -46,6 +51,36 @@ export class StoresService {
 
   public initializeStore(): void {
     this.store = null;
+  }
+  public bulk_delete(param: Store[]) {
+    const promise = new Promise((resolve, reject) => {
+      this.http.post(api_path + 'user/stores/bulk_delete', param)
+        .toPromise()
+        .then(
+          res  => {
+            resolve(res);
+          },
+          error => {
+            reject(error);
+          }
+        );
+    });
+    return promise;
+  }
+  public delete(id: number):  Promise<any>  {
+    const promise = new Promise((resolve, reject) => {
+      this.http.delete(api_path + 'user/stores/' + id)
+        .toPromise()
+        .then(
+          res  => {
+            resolve(res);
+          },
+          error => {
+            reject(error);
+          }
+        );
+    });
+    return promise;
   }
 
 }

@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
   loading = false;
   returnUrl: string;
   loginForm: FormGroup;
+  submitted = false;
 
   constructor(
     private route: ActivatedRoute ,
@@ -28,8 +29,9 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder ) { }
 
   authenticate(): void {
+    this.submitted = true;
     this.msg.error = '';
-      this.loading = true;
+    this.loading = true;
     if (this.loginForm.invalid) {
       this.loading = false;
 

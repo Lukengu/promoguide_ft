@@ -4,8 +4,8 @@ import {CategoryService} from '../../services/category.service';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../services/auth.service';
 import {UserModel} from '../../models/user.model';
-import {api_path} from '../../global';
 import {FileUploadService} from '../../services/file-upload.service';
+import {api_path} from '../../../environments/global';
 
 
 @Component({

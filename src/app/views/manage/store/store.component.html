@@ -3,7 +3,8 @@
   <div class="col-lg-12">
     <div class="card">
       <div class="card-header">
-        <i class="fa {{btn_css}}"></i>{{dialog_title}}
+        <i [ngClass]="!selected_store ? 'fa fa-plus-square': 'fa fa-edit'"></i><span *ngIf="selected_store">Editing
+        {{selected_store.parent_id}} {{selected_store.name}} - {{selected_store.shopping_center}}</span> <span *ngIf="!selected_store"> Adding Store </span>
         <div class="card-header-actions">
           <!--<button type="button" class="card-header-action btn btn-link btn-setting"><i class="icon-settings"></i></button>-->
           <button type="button" class="card-header-action btn btn-link btn-minimize"(click)="toggleCollapse()"><i class={{iconCollapse}}></i></button>
@@ -14,10 +15,9 @@
            (expanded)="expanded($event)"
            [collapse]="isCollapsed"
            class="card-body">
-        <form  [formGroup]="store_form">
+        <form  [formGroup]="store_form" (submit)="store_infos()" >
           <div>
-            <img *ngIf="logo"  src="{{logo}}"  style="" class="pull-right" width="125"/>
-
+            <img *ngIf="logo"  src="{{logo}}"  style="" class="pull-right" width="105"/>
             <br class="clear"/>
           </div>
 
@@ -33,7 +33,9 @@
                            bindLabel="name"
                            placeholder="Select Group"
 
-                           formControlName="parent_id">
+                           formControlName="parent_id"
+                           class="form-control"
+                           [ngClass]="{ 'is-invalid': submitted && f.parent_id.errors }">
                 </ng-select>
 
 
@@ -53,7 +55,8 @@
               <label class="col-form-label" >Store Name</label>
               <div class="controls">
 
-                <input type="text" formControlName="name"  class="form-control" placeholder="Enter Store Name"/>
+                <input type="text" formControlName="name"  class="form-control" placeholder="Enter Store Name"
+                       [ngClass]="{ 'is-invalid': submitted && f.name.errors }"/>
 
 
               </div>
@@ -89,7 +92,8 @@
                 <input class="form-control"  type="text"
                        autocapitalize="off" autocomplete="off"  appGPlacesAutocomplete
                        formControlName="address"
-                       (setAddress)="getAddressOnChange($event)">
+                       (setAddress)="getAddressOnChange($event)"
+                       [ngClass]="{ 'is-invalid': submitted && f.address.errors }">
 
 
               </div>
@@ -98,7 +102,8 @@
               <div class="form-group col-sm-3">
                 <label class="col-form-label" >Tel Number</label>
                 <div class="controls">
-                  <input type="text" formControlName="tel_number"  class="form-control" placeholder="Telephone Number"/>
+                  <input type="text" formControlName="tel_number"  class="form-control" placeholder="Telephone Number"
+                         [ngClass]="{ 'is-invalid': submitted && f.tel_number.errors }"/>
 
                 </div>
               </div>
@@ -125,7 +130,8 @@
               <label class="col-form-label">Name</label>
               <div class="controls">
 
-                <input type="text" formControlName="store_representatives_name"  class="form-control" placeholder="Please enter  name"/>
+                <input type="text" formControlName="store_representatives_name"  class="form-control" placeholder="Please enter  name"
+                       [ngClass]="{ 'is-invalid': submitted && f.store_representatives_name.errors }"/>
 
 
               </div>
@@ -134,7 +140,8 @@
               <label class="col-form-label" >Surname</label>
               <div class="controls">
 
-                <input type="text" formControlName="store_representatives_surname"  class="form-control" placeholder="Please enter  surname"/>
+                <input type="text" formControlName="store_representatives_surname"  class="form-control" placeholder="Please enter  surname"
+                       [ngClass]="{ 'is-invalid': submitted && f.store_representatives_surname.errors }"/>
 
 
               </div>
@@ -143,7 +150,8 @@
               <label class="col-form-label" >Email</label>
               <div class="controls">
 
-                <input type="email" formControlName="store_representatives_email"  class="form-control" placeholder="Please enter Email"/>
+                <input type="email" formControlName="store_representatives_email"  class="form-control" placeholder="Please enter Email"
+                       [ngClass]="{ 'is-invalid': submitted && f.store_representatives_email.errors }"/>
 
 
               </div>
@@ -151,7 +159,8 @@
             <div class="form-group col-sm-3">
               <label class="col-form-label" > Mobile</label>
               <div class="controls">
-                <input type="text" formControlName="store_representatives_cell_no"  class="form-control" placeholder="Enter Mobile"/>
+                <input type="text" formControlName="store_representatives_cell_no"  class="form-control" placeholder="Enter Mobile"
+                       [ngClass]="{ 'is-invalid': submitted && f.store_representatives_cell_no.errors }"/>
 
               </div>
             </div>
@@ -166,28 +175,32 @@
 
             <div class="form-group col-sm-3">
               <label class="col-form-label">Weekdays -  Opening Time</label>
-              <input formControlName="operating_times_weekday_from" type="time" class="form-control">
+              <input formControlName="operating_times_weekday_from" type="time" class="form-control"
+                     [ngClass]="{ 'is-invalid': submitted && f.operating_times_weekday_from.errors }">
 
             </div>
             <div class="form-group col-sm-3">
               <label class="col-form-label" >Weekdays - Closing Time</label>
               <div class="controls">
 
-                <input formControlName="operating_times_weekday_to" type="time" class="form-control">
+                <input formControlName="operating_times_weekday_to" type="time" class="form-control"
+                       [ngClass]="{ 'is-invalid': submitted && f.operating_times_weekday_to.errors }">
 
 
               </div>
             </div>
             <div class="form-group col-sm-3">
               <label class="col-form-label">Saturday -  Opening Time</label>
-              <input formControlName="operating_times_saturday_from" type="time" class="form-control">
+              <input formControlName="operating_times_saturday_from" type="time" class="form-control"
+                     [ngClass]="{ 'is-invalid': submitted && f.operating_times_saturday_from.errors }">
 
             </div>
             <div class="form-group col-sm-3">
               <label class="col-form-label" >Saturday - Closing Time</label>
               <div class="controls">
 
-                <input formControlName="operating_times_saturday_to" type="time" class="form-control">
+                <input formControlName="operating_times_saturday_to" type="time" class="form-control"
+                       [ngClass]="{ 'is-invalid': submitted && f.operating_times_saturday_to.errors }">
 
 
               </div>
@@ -199,28 +212,32 @@
 
             <div class="form-group col-sm-3">
               <label class="col-form-label">Sunday -  Opening Time</label>
-              <input formControlName="operating_times_sunday_from" type="time" class="form-control">
+              <input formControlName="operating_times_sunday_from" type="time" class="form-control"
+                     [ngClass]="{ 'is-invalid': submitted && f.operating_times_sunday_from.errors }">
 
             </div>
             <div class="form-group col-sm-3">
               <label class="col-form-label" >Sunday - Closing Time</label>
               <div class="controls">
 
-                <input formControlName="operating_times_sunday_to" type="time" class="form-control">
+                <input formControlName="operating_times_sunday_to" type="time" class="form-control"
+                       [ngClass]="{ 'is-invalid': submitted && f.operating_times_sunday_to.errors }">
 
 
               </div>
             </div>
             <div class="form-group col-sm-3">
               <label class="col-form-label">Public Holiday -  Opening Time</label>
-              <input formControlName="operating_times_ph_from" type="time" class="form-control">
+              <input formControlName="operating_times_ph_from" type="time" class="form-control"
+                     [ngClass]="{ 'is-invalid': submitted && f.operating_times_ph_from.errors }">
 
             </div>
             <div class="form-group col-sm-3">
-              <label class="col-form-label" >Public Hiliday - Closing Time</label>
+              <label class="col-form-label" >Public Holiday - Closing Time</label>
               <div class="controls">
 
-                <input formControlName="operating_times_ph_to" type="time" class="form-control">
+                <input formControlName="operating_times_ph_to" type="time" class="form-control"
+                       [ngClass]="{ 'is-invalid': submitted && f.operating_times_ph_to.errors }">
 
 
               </div>
