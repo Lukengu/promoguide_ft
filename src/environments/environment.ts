@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  domain: 'http://mypromoguide.com',
+  domain: 'http://mypromoguide.com/admin',
   backendUrl: '/api/v1/',
   stores_image_path: 'http://mypromoguide.com/public/files/business/stores',
 };
