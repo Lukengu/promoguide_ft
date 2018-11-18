@@ -6,7 +6,8 @@
           <div class="card-group">
             <div class="card p-4">
               <div class="card-body">
-                <div class="loader" *ngIf="loading"></div>
+                <mat-progress-spinner  style="margin:0 auto;z-index:999" mode="indeterminate" *ngIf="loading"></mat-progress-spinner>
+
                 <form [formGroup]="loginForm" (submit) = "authenticate()" >
                   <h1>Login</h1>
                   <p class="text-muted">Sign In to your account</p>

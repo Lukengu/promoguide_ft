@@ -13,7 +13,7 @@ export class AuthService {
   private user_key = 'user';
   private authUrl: string = api_path + 'user/auth';
   private registerUrl: string = api_path + 'user/register';
-  private headers = new HttpHeaders({'Access-Control-Allow-Origin': '*'} );
+  private headers = new HttpHeaders({'Content-Type': 'application/json'} );
   private currentUser: UserModel;
   constructor(private http: HttpClient) {}
 

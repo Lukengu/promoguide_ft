@@ -15,16 +15,20 @@ import {api_path} from '../../environments/global';
 export class StoresService {
 
   private store: Store = null;
-  private store_url: string = api_path + 'user/stores/';
-  private parent_store: string = api_path + 'user/stores/parent/';
+  protected store_url: string = api_path + 'user/stores';
+  protected parent_store: string = api_path + 'user/stores/parent';
   private headers: HttpHeaders;
 
-  constructor(private http: HttpClient, authservice: AuthService,   ) {
+  constructor(protected http: HttpClient, protected authservice: AuthService,   ) {
     const permissions: string[] = authservice.getCurrentUser().permissions;
-    if (permissions.indexOf('admin') === -1 ) {
-      this.store_url = this.store_url + authservice.getCurrentUser().id;
-      this.parent_store = this.parent_store + authservice.getCurrentUser().id;
+    if (permissions.indexOf('app_admin') == -1 ) {
+      this.store_url = `${this.store_url}/${authservice.getCurrentUser().id}`;
+      this.parent_store = `${this.parent_store}/${authservice.getCurrentUser().id}`;
+    } else {
+      this.parent_store = `${api_path}/stores/parent/0`;
+      this.parent_store = `${api_path}/stores`;
     }
+
     this.headers = new HttpHeaders();
     this.headers.append('Content-type', 'application/json')
       .append('Accept', 'application/json');

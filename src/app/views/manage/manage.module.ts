@@ -26,6 +26,9 @@ import { ManageRoutingModule } from './manage-routing.module';
 import { StoresComponent } from './stores.component';
 import {StoreComponent} from './store/store.component';
 import {SharedModule} from '../../shared/shared.module';
+import {StoreGroupComponent} from './store-group.component';
+import { StoreGroupFormComponent } from './store-group-form/store-group-form.component';
+
 
 
 
@@ -48,14 +51,19 @@ import {SharedModule} from '../../shared/shared.module';
     CollapseModule.forRoot(),
     NgSelectModule,
     SharedModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+
+
   ],
   declarations: [
     StoresComponent,
     StoreComponent,
+    StoreGroupComponent,
+    StoreGroupFormComponent
   ],
   entryComponents: [
-    StoreComponent
+    StoreComponent,
+    StoreGroupFormComponent
   ]
 })
 export class ManageModule { }

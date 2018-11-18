@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {StoresComponent} from './stores.component';
+import {StoreGroupComponent} from './store-group.component';
 
 const routes: Routes = [
   {
@@ -9,6 +10,13 @@ const routes: Routes = [
       title: 'Manage'
     },
     children: [
+      {
+        path: 'store-group',
+        component: StoreGroupComponent,
+        data: {
+          title: 'Store Groups'
+        }
+      },
       {
         path: 'stores',
         component: StoresComponent,

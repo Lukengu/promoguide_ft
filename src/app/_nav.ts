@@ -1,3 +1,4 @@
+
 export const navItems = [
   {
     name: 'Dashboard',
@@ -30,13 +31,40 @@ export const navItems = [
     icon: 'icon-layers',
     children: [
       {
+        name: 'Store Groups',
+        url: '/manage/store-group',
+        icon: 'icon-basket-loaded icons'
+      },
+      {
         name: 'Stores',
         url: '/manage/stores',
-        icon: 'icon-basket-loaded'
+        icon: 'icon-basket icons'
       }
     ]
   },
   {
+    name: 'Promotions',
+    url: '/promotions',
+    icon: 'icon-list icons',
+    children: [
+      {
+        name: 'Group',
+        url: '/promotions/group',
+        icon: 'icon-drawer icons',
+      },
+      {
+        name: 'Products',
+        url: '/promotions/products',
+        icon: 'icon-target icons'
+      }
+    ]
+  },
+  {
+    name: 'Banners',
+    url: '/banners',
+    icon: 'icon-flag icons',
+  },
+  /*{
     title: true,
     name: 'Components'
   },
@@ -235,11 +263,11 @@ export const navItems = [
     icon: 'icon-cloud-download',
     class: 'mt-auto',
     variant: 'success'
-  },
+  },*/
   {
-    name: 'Try CoreUI PRO',
-    url: 'http://coreui.io/pro/angular/',
-    icon: 'icon-layers',
+    name: 'Logout',
+    url: '/logout',
+    icon: 'icon-logout',
     variant: 'danger'
   }
 ];
